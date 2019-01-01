@@ -19,6 +19,7 @@ services:
       - sockdata:/sock
 
   phpfpm:
+  # You can change this to be 7.2 pr 7.3
     image: cschrum/php-fpm:7.1
     links:
       - db
