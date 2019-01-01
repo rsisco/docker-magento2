@@ -1,0 +1,45 @@
+# Docker Magento 2 Development Environment
+# Inspiration for this setup has been taken from a great number of other contributors
+# github.com/mandatoryhashtags/docker-magento2
+
+version: "3"
+
+services:
+  app:
+    image: cschrum/nginx:1.13
+    ports:
+      - "80:8000"
+      - "443:8443"
+    links:
+      - db
+      - phpfpm
+    volumes: &appvolumes
+      - ~/.composer:/var/www/.composer:delegated
+      - appdata:/var/www/html
+      - sockdata:/sock
+
+  phpfpm:
+    image: cschrum/php-fpm:7.1
+    links:
+      - db
+    volumes: *appvolumes
+
+  db:
+    image: percona:5.7
+    ports:
+      - "3306:3306"
+    env_file: env/db.env
+    volumes:
+      - dbdata:/var/lib/mysql
+
+# Don't uncomment this unless it is needed
+#  elasticsearch:
+#    image: elasticsearch:5.6
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+
+volumes:
+  appdata:
+  dbdata:
+  sockdata:

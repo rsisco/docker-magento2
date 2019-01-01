@@ -1,0 +1,39 @@
+# Docker Magento 2 Development Environment
+# Inspiration for this setup has been taken from a great number of other contributors
+# github.com/mandatoryhashtags/docker-m2
+
+version: "3"
+
+services:
+  app:
+    volumes: &appvolumes
+      # Every delegated drive will impact performance hevily
+      # Ensure you know the impacts of changing the items below
+      # If adding a delegated drive ensure it is required
+      - ~/.composer:/var/www/.composer:delegated
+      - ./src/app/code:/var/www/html/app/code:delegated
+      - ./src/app/design:/var/www/html/app/design:delegated
+      - ./src/app/etc:/var/www/html/app/etc:delegated
+      - ./src/composer.json:/var/www/html/composer.json:delegated
+      - ./src/composer.lock:/var/www/html/composer.lock:delegated
+      - ./src/nginx.conf.sample:/var/www/html/nginx.conf:delegated
+
+  phpfpm:
+    volumes: *appvolumes
+    # Pulled from Docker Documentation - Curtis Schrum
+    # Linux only: host.docker.internal doesn't exist https://github.com/docker/for-linux/issues/264
+    # Uncomment two lines below & replace IP with result of: docker run --rm alpine ip route | awk 'NR==1 {print $3}'
+    #extra_hosts:
+    #  - "host.docker.internal:IP"
+
+
+  # Disabling cron by default as it uses higher CPU, enable if needed
+  # Enabling the Cron will cause significant performance impacts on a Machine under 32GB of RAM
+  #cron:
+  #  image: markoshust/magento-php:7.2-fpm-0
+  #  user: root
+  #  command: /usr/local/bin/cronstart
+  #  tty: true
+  #  links:
+  #    - db
+  #  volumes: *appvolumes
