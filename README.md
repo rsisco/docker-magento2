@@ -19,6 +19,8 @@ I do not take any credit for the bin/ commands I took those from Mark Shust
 
 They are short and sweet and it seemed silly to rewrite something already written by another developer.
 
+Note that these instructions assume you already have [Docker](https://www.docker.com/products/docker-desktop) installed.
+
 ### Setup Instructions
 1. Clone this repo into a folder named for the site in our case magento2.local
 2. If using an existing site, clone the repo into the src/ folder
