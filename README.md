@@ -32,3 +32,17 @@ They are short and sweet and it seemed silly to rewrite something already writte
 9. Run bin/magento cache:clean && bin/magento cache:flush
 10. Exit Docker
 11. open https://magento2.local (other other domain)
+
+### New Install Instructions
+1. Clone this repo into a folder named for the site in our case magento2.local
+2. Run ./bin/download Major.Minor.Increment (2.2.7 or 2.3.0)
+3. Run ./bin/setup
+4. Copy the Database Dump into src/
+5. Add the site to the /etc/hosts file at 127.0.0.1
+    * echo "127.0.0.1 magento2.local" | sudo tee -a /etc/hosts
+6. Run bin/bash
+7. Run composer install
+8. Import the database
+9. Run bin/magento cache:clean && bin/magento cache:flush
+10. Exit Docker
+11. open https://magento2.local (other other domain)
